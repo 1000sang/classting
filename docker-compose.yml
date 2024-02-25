@@ -1,0 +1,107 @@
+version: "3.2"
+services:
+  postgres:
+    container_name: postgres
+    build: 
+      context: ./postgres
+      dockerfile: ./dockerfile
+    restart: always
+    env_file:
+      - ./postgres/.env
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - app-network
+
+  mongo:
+    container_name: mongo
+    build: 
+      context: ./mongo
+      dockerfile: ./dockerfile
+    restart: always
+    env_file:
+      - ./mongo/.env
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo/data:/data/db
+      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    command: mongod --auth
+    networks:
+      - app-network
+  
+  redis:
+    container_name: redis
+    build:
+      context: .
+      dockerfile: ./redis/dockerfile
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis/data:/data
+      - ./redis/conf:/etc/redis
+      # - ./redis/conf/redis.conf:/usr/local/conf/redis.conf
+    # command: redis-server --requirepass 1234 --port 6379
+    # command: redis-server /usr/local/conf/redis.conf
+    command: redis-server --port 6379
+    networks:
+      - app-network
+
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./nest/docker/dev/dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ./nest/src:/app/src
+      - ./nest/public:/app/public    
+      - ./nest/views:/app/views
+      - ./nest/fcm:/app/fcm
+    networks:
+      - app-network
+    env_file:
+      - ./nest/.env
+    depends_on:
+      - postgres
+      - redis
+      - mongo
+
+  socket:
+    container_name: socket
+    build:
+      context: .
+      dockerfile: ./socket/docker/dev/dockerfile
+    restart: always
+    ports:
+      - 4000:4000
+    volumes:
+      - ./socket/src:/app/src
+    networks:
+      - app-network
+    env_file:
+    - ./socket/.env
+    depends_on:
+      - mongo
+      - redis
+
+  adminer:
+    container_name: adminer
+    build:
+      context: .
+      dockerfile: ./adminer/dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
