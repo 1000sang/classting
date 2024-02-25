@@ -1,8 +1,9 @@
-# Petdeasonson Project
+# 클래스팅 과제
 
 ## Description
 
-반려동물 종합관리 앱
+자세한 문서는 아래 링크를 참고해주세요
+https://1000sang.notion.site/a834d2fc81ad4251842089e23a204b73?pvs=4
 
 ## Getting Started
 
@@ -18,7 +19,7 @@ node
 npm  
 docker  
 nestjs    
-nodemon    
+ 
 
 ## Package Structure (계층형)
 ```html
