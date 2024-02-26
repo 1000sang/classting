@@ -24,7 +24,7 @@ export class SchoolPageController {
 		return await this.schoolPageService.create(dto);
 	}
 
-	@Post('/news-feed/:id/')
+	@Post('/:id/news-feed/')
 	@ApiOperation({ summary: '소식 작성' })
 	@ApiBody({ type: CreateNewsFeedDto })
 	@ApiCreatedResponse({
@@ -34,7 +34,7 @@ export class SchoolPageController {
 	async createNews(@Body() body: CreateNewsFeedDto, @Param('id') id: string) {
 		const params = {
 			news: body.news,
-			id,
+			id: Number(id),
 		};
 		return await this.schoolPageService.createNews(params);
 	}

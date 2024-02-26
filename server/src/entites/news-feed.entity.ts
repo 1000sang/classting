@@ -5,7 +5,7 @@ import { SchoolPageEntity } from './school-page.entity';
 import { AccountEntity } from './account.entity';
 
 @Entity({
-	name: 'NEW_SPEED',
+	name: 'NEWS_FEED',
 })
 export class NewsFeedEntity extends CommonEntity {
 	@Column()

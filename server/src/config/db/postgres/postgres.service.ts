@@ -4,6 +4,7 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { AccountEntity } from '../../../entites/account.entity';
 import { NewsFeedEntity } from '../../../entites/news-feed.entity';
 import { SchoolPageEntity } from '../../../entites/school-page.entity';
+import { StudentNewsEntity } from '../../../entites/student-news.entity';
 
 @Injectable()
 export class PostgresConfigService implements TypeOrmOptionsFactory {
@@ -18,7 +19,7 @@ export class PostgresConfigService implements TypeOrmOptionsFactory {
 			host: this.configService.get<string>('DB_HOST'),
 			database: this.configService.get<string>('DB_NAME'),
 			// entities: [__dirname + '/../../../dist/**/**/*.entity{.ts,.js}'],
-			entities: [AccountEntity, NewsFeedEntity, SchoolPageEntity],
+			entities: [AccountEntity, NewsFeedEntity, SchoolPageEntity, StudentNewsEntity],
 			synchronize: true, //! set 'false' in production
 			autoLoadEntities: true,
 			logging: true,
