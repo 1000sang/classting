@@ -55,4 +55,28 @@ export class SchoolPageService {
 			schoolPage,
 		});
 	}
+
+	async deleteNews(id: string) {
+		const schoolPage = await this.schoolPageRepository
+			.findOneByOrFail({
+				id: Number(id),
+			})
+			.catch(err => {
+				throw new SchoolPageNotFoundException('학교 페이지를 찾을 수 없습니다.');
+			});
+
+		await this.newSpeedRepository.softDelete({ id: Number(id) });
+	}
+
+	async updateNews(params: { id: number; news: string }) {
+		const schoolPage = await this.schoolPageRepository
+			.findOneByOrFail({
+				id: params.id,
+			})
+			.catch(err => {
+				throw new SchoolPageNotFoundException('학교 페이지를 찾을 수 없습니다.');
+			});
+
+		await this.newSpeedRepository.update(params.id, { news: params.news });
+	}
 }

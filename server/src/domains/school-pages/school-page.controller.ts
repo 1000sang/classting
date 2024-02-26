@@ -1,10 +1,12 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SchoolPageService } from './school-page.service';
 import { CreateSchoolPageDto } from './dtos/create.school-page.dto';
 import { CreateSchoolPagePresenter } from './presenters/create.school-page.presenter';
 import { CreateNewSpeedDto } from './dtos/create.new-speed.dto';
 import { CreateNewSpeedPresenter } from './presenters/create.new-speed.presenter';
+import { DeleteNewSpeedDto } from './dtos/delete.new-speed.dto';
+import { UpdateNewSpeedDto } from './dtos/update.new-speed.dto';
 
 @ApiBearerAuth()
 @Controller('/school-page')
@@ -36,5 +38,21 @@ export class SchoolPageController {
 			id,
 		};
 		return await this.schoolPageService.createNews(params);
+	}
+
+	@Delete('/new-speed/:id')
+	@ApiOperation({ summary: '소식 삭제' })
+	async deleteNews(@Param('id') id: string) {
+		return await this.schoolPageService.deleteNews(id);
+	}
+
+	@Patch('/new-speed/:id')
+	@ApiOperation({ summary: '소식 수정' })
+	async updateNews(@Body() body: UpdateNewSpeedDto, @Param('id') id: string) {
+		const params = {
+			id: Number(id),
+			news: body.news,
+		};
+		return await this.schoolPageService.updateNews(params);
 	}
 }
