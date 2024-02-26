@@ -11,6 +11,15 @@ export enum ExceptionCodeEnum {
 	 */
 	AccountNotFound = 'ACCOUNT0001',
 	/**
+	 * 학생이 아닌 경우
+	 */
+	NotStudent = 'ACCOUNT0002',
+	/**
+	 * 학교 관리자가 아닌 경우
+	 */
+	NotSchoolAdmin = 'ACCOUNT0003',
+
+	/**
 	 * 아이디 또는 비밀번호가 틀릴경우
 	 */
 	InvalidUsernameOrPassword = 'AUTH0003',
