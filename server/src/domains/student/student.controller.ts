@@ -60,4 +60,16 @@ export class StudentController {
 		const params = { accountId: account.id, schoolPageId: Number(id) };
 		return await this.studentService.getNewsFeed(params);
 	}
+
+	@Get('/news-feed/all')
+	@UseGuards(StudentGuard)
+	@ApiOperation({ summary: '구독중인 모든 학교의 소식 보기' })
+	@ApiCreatedResponse({
+		description: '학교 페이지 소식',
+		type: Array<GetNewsPresenter>,
+	})
+	async getAllNewsFeed(@CurrentAccount() account) {
+		const params = { accountId: account.id };
+		return await this.studentService.getAllNewsFeed(params);
+	}
 }

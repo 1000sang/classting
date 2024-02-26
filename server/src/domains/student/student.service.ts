@@ -100,6 +100,7 @@ export class StudentService {
 				return 'nf.id IN' + subQuery;
 			})
 			.setParameters({ accountId: params.accountId, schoolPageId: params.schoolPageId })
+			.leftJoinAndSelect('nf.schoolPage', 'sp')
 			.orderBy('nf.createdAt', 'DESC')
 			.getMany();
 
@@ -109,6 +110,39 @@ export class StudentService {
 					id: newsFeed.id,
 					createdAt: newsFeed.createdAt,
 					news: newsFeed.news,
+					schoolPage: {
+						region: newsFeed.schoolPage.region,
+						schoolName: newsFeed.schoolPage.schoolName,
+					},
+				});
+			}),
+		};
+	}
+
+	async getAllNewsFeed(params: { accountId: number }) {
+		const newsFeeds = await this.newsFeedRepository
+			.createQueryBuilder('nf')
+			.where(qb => {
+				const subQuery = qb.subQuery().from(StudentNewsEntity, 'sn').select('sn.newsFeedId').where('sn.accountId = :accountId').getQuery();
+				return 'nf.id IN' + subQuery;
+			})
+			.leftJoinAndSelect('nf.schoolPage', 'sp')
+			.setParameters({ accountId: params.accountId })
+			.orderBy('nf.createdAt', 'DESC')
+			.getMany();
+
+		console.log(newsFeeds);
+
+		return {
+			data: newsFeeds.map(newsFeed => {
+				return new GetNewsPresenter({
+					id: newsFeed.id,
+					createdAt: newsFeed.createdAt,
+					news: newsFeed.news,
+					schoolPage: {
+						region: newsFeed.schoolPage.region,
+						schoolName: newsFeed.schoolPage.schoolName,
+					},
 				});
 			}),
 		};
