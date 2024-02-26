@@ -14,12 +14,20 @@ export class StudentNewsEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@ManyToOne(() => AccountEntity, account => account.id)
+	// @ManyToOne(() => AccountEntity, account => account.id)
+	// accountId: number;
+	//
+	// @ManyToOne(() => SchoolPageEntity, schoolPage => schoolPage.id)
+	// schoolPageId: number;
+	//
+	// @ManyToOne(() => NewsFeedEntity, newsFeed => newsFeed.id)
+	// newsFeedId: number;
+	@Column()
 	accountId: number;
 
-	@ManyToOne(() => SchoolPageEntity, schoolPage => schoolPage.id)
+	@Column()
 	schoolPageId: number;
 
-	@ManyToOne(() => NewsFeedEntity, newsFeed => newsFeed.id)
+	@Column()
 	newsFeedId: number;
 }

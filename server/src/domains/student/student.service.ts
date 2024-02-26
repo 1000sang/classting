@@ -9,6 +9,7 @@ import { SchoolPageAlreadySubException } from '../../exceptions/school-page.alre
 import { LoginPresenter } from '../accounts/presenters/login.presenter';
 import { GetSchoolPageListPresenter } from './presenters/get.school-page.list.presenter';
 import { StudentNewsEntity } from '../../entites/student-news.entity';
+import { GetNewsPresenter } from './presenters/get.news.presenter';
 
 @Injectable()
 export class StudentService {
@@ -17,6 +18,8 @@ export class StudentService {
 		private readonly schoolPageRepository: Repository<SchoolPageEntity>,
 		@InjectRepository(AccountEntity)
 		private readonly accountRepository: Repository<AccountEntity>,
+		@InjectRepository(NewsFeedEntity)
+		private readonly newsFeedRepository: Repository<NewsFeedEntity>,
 		@InjectRepository(StudentNewsEntity)
 		private readonly studentNewsRepository: Repository<StudentNewsEntity>,
 	) {}
@@ -90,11 +93,24 @@ export class StudentService {
 	}
 
 	async getNewsFeed(params: { accountId: number; schoolPageId: number }) {
-		const newsFeed = await this.studentNewsRepository.find({
-			where: {
-				accountId: params.accountId,
-				schoolPageId: params.schoolPageId,
-			},
-		});
+		const newsFeeds = await this.newsFeedRepository
+			.createQueryBuilder('nf')
+			.where(qb => {
+				const subQuery = qb.subQuery().from(StudentNewsEntity, 'sn').select('sn.newsFeedId').where('sn.accountId = :accountId AND sn.schoolPageId = :schoolPageId').getQuery();
+				return 'nf.id IN' + subQuery;
+			})
+			.setParameters({ accountId: params.accountId, schoolPageId: params.schoolPageId })
+			.orderBy('nf.createdAt', 'DESC')
+			.getMany();
+
+		return {
+			data: newsFeeds.map(newsFeed => {
+				return new GetNewsPresenter({
+					id: newsFeed.id,
+					createdAt: newsFeed.createdAt,
+					news: newsFeed.news,
+				});
+			}),
+		};
 	}
 }

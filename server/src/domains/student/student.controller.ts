@@ -5,6 +5,7 @@ import { StudentService } from './student.service';
 import { StudentGuard } from '../accounts/passport/guards/student.guard';
 import { CurrentAccount } from '../../decorators/account.decorator';
 import { GetSchoolPageListPresenter } from './presenters/get.school-page.list.presenter';
+import { GetNewsPresenter } from './presenters/get.news.presenter';
 
 @ApiBearerAuth()
 @Controller('/student')
@@ -53,7 +54,7 @@ export class StudentController {
 	@ApiOperation({ summary: '해당 학교 페이지의 소식 보기' })
 	@ApiCreatedResponse({
 		description: '학교 페이지 소식',
-		type: Array<GetSchoolPageListPresenter>,
+		type: Array<GetNewsPresenter>,
 	})
 	async getNewsFeed(@Param('id') id: string, @CurrentAccount() account) {
 		const params = { accountId: account.id, schoolPageId: Number(id) };
