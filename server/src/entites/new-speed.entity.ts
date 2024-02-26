@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, Unique } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, Unique } from 'typeorm';
 import { CommonEntity } from './common.entity';
 import { Exclude } from 'class-transformer';
 import { SchoolPageEntity } from './school-page.entity';
@@ -10,6 +10,6 @@ export class NewSpeedEntity extends CommonEntity {
 	@Column()
 	news: string;
 
-	@OneToMany(type => SchoolPageEntity, schoolPage => schoolPage.id)
+	@ManyToOne(() => SchoolPageEntity, schoolPage => schoolPage.id)
 	schoolPage: SchoolPageEntity;
 }

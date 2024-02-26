@@ -1,8 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SchoolPageService } from './school-page.service';
 import { CreateSchoolPageDto } from './dtos/create.school-page.dto';
 import { CreateSchoolPagePresenter } from './presenters/create.school-page.presenter';
+import { CreateNewSpeedDto } from './dtos/create.new-speed.dto';
+import { CreateNewSpeedPresenter } from './presenters/create.new-speed.presenter';
 
 @ApiBearerAuth()
 @Controller('/school-page')
@@ -19,5 +21,20 @@ export class SchoolPageController {
 	})
 	async create(@Body() dto: CreateSchoolPageDto) {
 		return await this.schoolPageService.create(dto);
+	}
+
+	@Post('/new-speed/:id/')
+	@ApiOperation({ summary: '소식 작성' })
+	@ApiBody({ type: CreateNewSpeedDto })
+	@ApiCreatedResponse({
+		description: '소식 생성 응답',
+		type: CreateNewSpeedPresenter,
+	})
+	async createNews(@Body() body: CreateNewSpeedDto, @Param('id') id: string) {
+		const params = {
+			news: body.news,
+			id,
+		};
+		return await this.schoolPageService.createNews(params);
 	}
 }

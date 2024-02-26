@@ -22,6 +22,14 @@ export enum ExceptionCodeEnum {
 	 */
 	PageAlreadyExist = 'PAGE0001',
 	/**
+	 * 소식 작성 실패했을 경우
+	 */
+	CreateNewsFail = 'PAGE0002',
+	/**
+	 * 학교 페이지를 찾을 수 없는 경우
+	 */
+	SchoolPageNotFound = 'PAGE0003',
+	/**
 	 * AccessToken이 잘못된 경우
 	 */
 	InvalidAccessToken = 'AUTH0005',

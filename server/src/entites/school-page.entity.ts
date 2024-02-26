@@ -1,6 +1,5 @@
 import { Column, Entity, JoinColumn, OneToMany, Unique } from 'typeorm';
 import { CommonEntity } from './common.entity';
-import { Exclude } from 'class-transformer';
 import { NewSpeedEntity } from './new-speed.entity';
 
 @Entity({
@@ -15,5 +14,5 @@ export class SchoolPageEntity extends CommonEntity {
 	schoolName: string;
 
 	@OneToMany(type => NewSpeedEntity, newSpeed => newSpeed.id)
-	newSpeed: NewSpeedEntity;
+	newSpeed: NewSpeedEntity[];
 }
