@@ -5,11 +5,9 @@ import { Repository } from 'typeorm';
 import { CreateSchoolPageDto } from './dtos/create.school-page.dto';
 import { PageAlreadyExistException } from '../../exceptions/page.already.exist.exception';
 import { NewsFeedEntity } from '../../entites/news-feed.entity';
-import { CreateNewsFaileException } from '../../exceptions/create.news.faile.exception';
 import { SchoolPageNotFoundException } from '../../exceptions/school-page.not.found.exception';
 import { CreateSchoolPagePresenter } from './presenters/create.school-page.presenter';
 import { StudentNewsEntity } from '../../entites/student-news.entity';
-import { from, map, of } from 'rxjs';
 import { AccountEntity } from '../../entites/account.entity';
 
 @Injectable()
@@ -73,14 +71,14 @@ export class SchoolPageService {
 		const subscribers = schoolPage.accounts;
 
 		const studentNewsEntities: {
-			schoolPage: SchoolPageEntity;
-			newsFeed: NewsFeedEntity;
-			account: AccountEntity;
+			schoolPageId: number;
+			newsFeedId: number;
+			accountId: number;
 		}[] = subscribers.map(subscriber => {
 			return this.studentNewsRepository.create({
-				schoolPage: schoolPage,
-				newsFeed: newsFeedEntity,
-				account: subscriber,
+				schoolPageId: schoolPage.id,
+				newsFeedId: newsFeedEntity.id,
+				accountId: subscriber.id,
 			});
 		});
 

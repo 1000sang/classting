@@ -8,17 +8,17 @@ import { AccountEntity } from '../../entites/account.entity';
 import { SchoolPageAlreadySubException } from '../../exceptions/school-page.alread.sub.exception';
 import { LoginPresenter } from '../accounts/presenters/login.presenter';
 import { GetSchoolPageListPresenter } from './presenters/get.school-page.list.presenter';
+import { StudentNewsEntity } from '../../entites/student-news.entity';
 
 @Injectable()
 export class StudentService {
 	constructor(
 		@InjectRepository(SchoolPageEntity)
 		private readonly schoolPageRepository: Repository<SchoolPageEntity>,
-		@InjectRepository(NewsFeedEntity)
-		private readonly newSpeedRepository: Repository<NewsFeedEntity>,
 		@InjectRepository(AccountEntity)
 		private readonly accountRepository: Repository<AccountEntity>,
-		private readonly dataSource: DataSource,
+		@InjectRepository(StudentNewsEntity)
+		private readonly studentNewsRepository: Repository<StudentNewsEntity>,
 	) {}
 
 	async subscribe(params: { schoolPageId: number; accountId: number }) {
@@ -87,5 +87,14 @@ export class StudentService {
 				});
 			}),
 		};
+	}
+
+	async getNewsFeed(params: { accountId: number; schoolPageId: number }) {
+		const newsFeed = await this.studentNewsRepository.find({
+			where: {
+				accountId: params.accountId,
+				schoolPageId: params.schoolPageId,
+			},
+		});
 	}
 }

@@ -9,17 +9,17 @@ import { NewsFeedEntity } from './news-feed.entity';
 @Entity({
 	name: 'STUDENT_NEWS',
 })
-@Index(['account', 'schoolPage'])
+@Index(['accountId'])
 export class StudentNewsEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
 	@ManyToOne(() => AccountEntity, account => account.id)
-	account: AccountEntity;
+	accountId: number;
 
 	@ManyToOne(() => SchoolPageEntity, schoolPage => schoolPage.id)
-	schoolPage: SchoolPageEntity;
+	schoolPageId: number;
 
 	@ManyToOne(() => NewsFeedEntity, newsFeed => newsFeed.id)
-	newsFeed: NewsFeedEntity;
+	newsFeedId: number;
 }

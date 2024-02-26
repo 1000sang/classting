@@ -47,4 +47,16 @@ export class StudentController {
 		const params = { accountId: account.id };
 		return await this.studentService.getSchoolPage(params);
 	}
+
+	@Get('/news-feed/page/:id')
+	@UseGuards(StudentGuard)
+	@ApiOperation({ summary: '해당 학교 페이지의 소식 보기' })
+	@ApiCreatedResponse({
+		description: '학교 페이지 소식',
+		type: Array<GetSchoolPageListPresenter>,
+	})
+	async getNewsFeed(@Param('id') id: string, @CurrentAccount() account) {
+		const params = { accountId: account.id, schoolPageId: Number(id) };
+		return await this.studentService.getNewsFeed(params);
+	}
 }
