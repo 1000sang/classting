@@ -5,7 +5,7 @@ import { Exclude } from 'class-transformer';
 @Entity({
 	name: 'ACCOUNT',
 })
-export class Account extends CommonEntity {
+export class AccountEntity extends CommonEntity {
 	@Column()
 	email: string;
 
