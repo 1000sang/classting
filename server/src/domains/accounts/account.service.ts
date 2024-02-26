@@ -1,15 +1,13 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AccountEntity } from '../../entites/account.entity';
 import { Repository } from 'typeorm';
 import { LoginDto } from './dtos/login.dto';
-import * as bcrypt from 'bcrypt';
 import { InvalidatePasswordException } from '../../exceptions/invalidate.password.exception';
 import { JwtService } from '@nestjs/jwt';
 import { LoginPresenter } from './presenters/login.presenter';
 import { InternalException } from '../../exceptions/internal.exception';
-import { AccountRepositoryProvide } from '../../consts';
-import { SignupDto } from './dtos/signup.dto';
+import { NotFoundAccountException } from '../../exceptions/not.found.account.exception';
 
 const defaultAccount = [
 	{ email: 'admin1@gmail.com', password: '1234', isStudent: false },
@@ -26,6 +24,12 @@ export class AccountService {
 		private readonly accountRepository: Repository<AccountEntity>,
 		private readonly jwtService: JwtService,
 	) {}
+
+	async findOneById(id: number) {
+		return await this.accountRepository.findOneByOrFail({ id }).catch(err => {
+			throw new NotFoundAccountException('계정을 찾을 수 없습니다.');
+		});
+	}
 
 	async insertDefaultAccount() {
 		try {
@@ -52,6 +56,7 @@ export class AccountService {
 			}
 
 			const token = await this.jwtService.signAsync({
+				id: account.id,
 				email: account.email,
 				isStudent: account.isStudent,
 			});
