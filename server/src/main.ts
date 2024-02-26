@@ -8,7 +8,7 @@ async function bootstrap() {
 
 	const configService = app.get<ConfigService>(ConfigService);
 
-	const config = new DocumentBuilder().setTitle('Classting').setDescription('클래스팅 과제 제출용 API description').setVersion('1.0').addTag('Classting').build();
+	const config = new DocumentBuilder().setTitle('Classting').setDescription('클래스팅 과제 제출용 API description').addBearerAuth().setVersion('1.0').addTag('Classting').build();
 
 	const document = SwaggerModule.createDocument(app, config);
 

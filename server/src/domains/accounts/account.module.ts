@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountEntity } from '../../entites/account.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { StudentStrategy } from './passport/strategies/student.strategy';
+import { SchoolAdminStrategy } from './passport/strategies/school-admin.strategy';
 
 @Module({
 	imports: [
@@ -13,12 +15,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 			imports: [ConfigModule],
 			inject: [ConfigService],
 			useFactory: async (configService: ConfigService) => ({
-				secret: 'secretKey',
+				secret: configService.get<string>('SECRET_KEY'),
 			}),
 		}),
 	],
 	controllers: [AccountController],
-	providers: [AccountService],
+	providers: [AccountService, StudentStrategy, SchoolAdminStrategy],
 	exports: [AccountService],
 })
 export class AccountModule {

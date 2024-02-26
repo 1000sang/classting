@@ -39,6 +39,11 @@ export enum ExceptionCodeEnum {
 	 */
 	SchoolPageNotFound = 'PAGE0003',
 	/**
+	 * 이미 구독한 학교페이지인 경우
+	 */
+	SchoolPageAlreadySub = 'PAGE0004',
+
+	/**
 	 * AccessToken이 잘못된 경우
 	 */
 	InvalidAccessToken = 'AUTH0005',
