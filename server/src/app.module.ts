@@ -5,6 +5,7 @@ import { PostgresConfigModule } from './config/db/postgres/postgres.module';
 import { PostgresConfigService } from './config/db/postgres/postgres.service';
 import { ConfigModule } from '@nestjs/config';
 import { SchoolPageModule } from './domains/school-pages/school-page.module';
+import { StudentModule } from './domains/student/student.module';
 
 @Module({
 	imports: [
@@ -18,6 +19,7 @@ import { SchoolPageModule } from './domains/school-pages/school-page.module';
 		}),
 		AccountModule,
 		SchoolPageModule,
+		StudentModule,
 	],
 })
 export class AppModule {}
