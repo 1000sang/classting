@@ -11,17 +11,24 @@ export enum ExceptionCodeEnum {
 	 */
 	AccountNotFound = 'ACCOUNT0001',
 	/**
-	 * 이미 가입된 회원
-	 */
-	AlreadySignUpUser = 'AUTH0002',
-	/**
 	 * 아이디 또는 비밀번호가 틀릴경우
 	 */
 	InvalidUsernameOrPassword = 'AUTH0003',
 	/**
-	 * Device Token을 찾지 못한 경우
+	 * 학교페이지
 	 */
-	NotFoundUserDeviceToken = 'AUTH0004',
+	/**
+	 * 학교 페이지 지역, 이름이 중복될 경우
+	 */
+	PageAlreadyExist = 'PAGE0001',
+	/**
+	 * 소식 작성 실패했을 경우
+	 */
+	CreateNewsFail = 'PAGE0002',
+	/**
+	 * 학교 페이지를 찾을 수 없는 경우
+	 */
+	SchoolPageNotFound = 'PAGE0003',
 	/**
 	 * AccessToken이 잘못된 경우
 	 */

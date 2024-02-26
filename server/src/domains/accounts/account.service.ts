@@ -1,6 +1,6 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Account } from '../../entites/account.entity';
+import { AccountEntity } from '../../entites/account.entity';
 import { Repository } from 'typeorm';
 import { LoginDto } from './dtos/login.dto';
 import * as bcrypt from 'bcrypt';
@@ -22,8 +22,8 @@ const defaultAccount = [
 @Injectable()
 export class AccountService {
 	constructor(
-		@InjectRepository(Account)
-		private readonly accountRepository: Repository<Account>,
+		@InjectRepository(AccountEntity)
+		private readonly accountRepository: Repository<AccountEntity>,
 		private readonly jwtService: JwtService,
 	) {}
 
@@ -40,7 +40,7 @@ export class AccountService {
 
 	async login(dto: LoginDto) {
 		try {
-			const account: Account = await this.accountRepository.findOne({
+			const account: AccountEntity = await this.accountRepository.findOne({
 				where: {
 					email: dto.email,
 					password: dto.password,
