@@ -21,4 +21,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 	providers: [AccountService],
 	exports: [AccountService],
 })
-export class AccountModule {}
+export class AccountModule {
+	constructor(private accountService: AccountService) {
+		this.accountService.insertDefaultAccount().then(r => {
+			console.log('default account insert');
+		});
+	}
+}

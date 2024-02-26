@@ -3,6 +3,7 @@ import { ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swag
 import { AccountService } from './account.service';
 import { LoginDto } from './dtos/login.dto';
 import { LoginPresenter } from './presenters/login.presenter';
+import { SignupDto } from './dtos/signup.dto';
 
 @Controller('/account')
 @ApiTags('account api')
@@ -17,6 +18,6 @@ export class AccountController {
 		type: LoginPresenter,
 	})
 	async login(@Body() dto: LoginDto) {
-		return this.accountService.login(dto);
+		return await this.accountService.login(dto);
 	}
 }
