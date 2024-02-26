@@ -61,3 +61,5 @@ server/dist
 server/node_modules
 server/build
 server/.env
+
+postgres/data
