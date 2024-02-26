@@ -43,29 +43,25 @@ export class AccountService {
 	}
 
 	async login(dto: LoginDto) {
-		try {
-			const account: AccountEntity = await this.accountRepository.findOne({
-				where: {
-					email: dto.email,
-					password: dto.password,
-				},
-			});
+		const account: AccountEntity = await this.accountRepository.findOne({
+			where: {
+				email: dto.email,
+				password: dto.password,
+			},
+		});
 
-			if (!account) {
-				throw new InvalidatePasswordException('로그인 정보가 틀렸습니다');
-			}
-
-			const token = await this.jwtService.signAsync({
-				id: account.id,
-				email: account.email,
-				isStudent: account.isStudent,
-			});
-
-			return new LoginPresenter({
-				token,
-			});
-		} catch (err) {
-			throw new InternalException(err.massage);
+		if (!account) {
+			throw new InvalidatePasswordException('로그인 정보가 틀렸습니다');
 		}
+
+		const token = await this.jwtService.signAsync({
+			id: account.id,
+			email: account.email,
+			isStudent: account.isStudent,
+		});
+
+		return new LoginPresenter({
+			token,
+		});
 	}
 }

@@ -13,10 +13,4 @@ export class NewsFeedEntity extends CommonEntity {
 
 	@ManyToOne(() => SchoolPageEntity, schoolPage => schoolPage.id)
 	schoolPage: SchoolPageEntity;
-
-	@ManyToMany(() => AccountEntity)
-	@JoinTable({
-		name: 'SUB',
-	})
-	accounts: AccountEntity[];
 }
