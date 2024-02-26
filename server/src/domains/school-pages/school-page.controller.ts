@@ -3,10 +3,9 @@ import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } fro
 import { SchoolPageService } from './school-page.service';
 import { CreateSchoolPageDto } from './dtos/create.school-page.dto';
 import { CreateSchoolPagePresenter } from './presenters/create.school-page.presenter';
-import { CreateNewSpeedDto } from './dtos/create.new-speed.dto';
-import { CreateNewSpeedPresenter } from './presenters/create.new-speed.presenter';
-import { DeleteNewSpeedDto } from './dtos/delete.new-speed.dto';
-import { UpdateNewSpeedDto } from './dtos/update.new-speed.dto';
+import { CreateNewsFeedDto } from './dtos/create.news-feed.dto';
+import { UpdateNewsFeedDto } from './dtos/update.news-feed.dto';
+import { CreateNewsFeedPresenter } from './presenters/create.news-feed.presenter';
 
 @ApiBearerAuth()
 @Controller('/school-page')
@@ -25,14 +24,14 @@ export class SchoolPageController {
 		return await this.schoolPageService.create(dto);
 	}
 
-	@Post('/new-speed/:id/')
+	@Post('/news-feed/:id/')
 	@ApiOperation({ summary: '소식 작성' })
-	@ApiBody({ type: CreateNewSpeedDto })
+	@ApiBody({ type: CreateNewsFeedDto })
 	@ApiCreatedResponse({
 		description: '소식 생성 응답',
-		type: CreateNewSpeedPresenter,
+		type: CreateNewsFeedPresenter,
 	})
-	async createNews(@Body() body: CreateNewSpeedDto, @Param('id') id: string) {
+	async createNews(@Body() body: CreateNewsFeedDto, @Param('id') id: string) {
 		const params = {
 			news: body.news,
 			id,
@@ -40,15 +39,15 @@ export class SchoolPageController {
 		return await this.schoolPageService.createNews(params);
 	}
 
-	@Delete('/new-speed/:id')
+	@Delete('/news-feed/:id')
 	@ApiOperation({ summary: '소식 삭제' })
 	async deleteNews(@Param('id') id: string) {
 		return await this.schoolPageService.deleteNews(id);
 	}
 
-	@Patch('/new-speed/:id')
+	@Patch('/news-feed/:id')
 	@ApiOperation({ summary: '소식 수정' })
-	async updateNews(@Body() body: UpdateNewSpeedDto, @Param('id') id: string) {
+	async updateNews(@Body() body: UpdateNewsFeedDto, @Param('id') id: string) {
 		const params = {
 			id: Number(id),
 			news: body.news,

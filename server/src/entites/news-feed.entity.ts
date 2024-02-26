@@ -6,7 +6,7 @@ import { SchoolPageEntity } from './school-page.entity';
 @Entity({
 	name: 'NEW_SPEED',
 })
-export class NewSpeedEntity extends CommonEntity {
+export class NewsFeedEntity extends CommonEntity {
 	@Column()
 	news: string;
 

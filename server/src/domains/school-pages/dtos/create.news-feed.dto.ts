@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
-export class CreateNewSpeedDto {
+export class CreateNewsFeedDto {
 	@ApiProperty({
 		description: '소식',
 	})

@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, OneToMany, Unique } from 'typeorm';
 import { CommonEntity } from './common.entity';
-import { NewSpeedEntity } from './new-speed.entity';
+import { NewsFeedEntity } from './news-feed.entity';
 
 @Entity({
 	name: 'SCHOOL_PAGE',
@@ -13,6 +13,6 @@ export class SchoolPageEntity extends CommonEntity {
 	@Column()
 	schoolName: string;
 
-	@OneToMany(type => NewSpeedEntity, newSpeed => newSpeed.id)
-	newSpeed: NewSpeedEntity[];
+	@OneToMany(type => NewsFeedEntity, newSpeed => newSpeed.id)
+	newSpeed: NewsFeedEntity[];
 }

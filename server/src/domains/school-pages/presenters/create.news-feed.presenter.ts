@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateNewSpeedPresenter {
-	constructor(obj: Partial<CreateNewSpeedPresenter>) {
+export class CreateNewsFeedPresenter {
+	constructor(obj: Partial<CreateNewsFeedPresenter>) {
 		Object.assign(this, obj);
 	}
 

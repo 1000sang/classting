@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
-export class UpdateNewSpeedDto {
+export class DeleteNewsFeedDto {
 	@ApiProperty({
-		description: '소식',
+		description: '소식 id',
 	})
 	@IsString()
-	readonly news: string;
+	readonly id: string;
 }

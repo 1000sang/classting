@@ -4,7 +4,7 @@ import { SchoolPageEntity } from '../../entites/school-page.entity';
 import { Repository } from 'typeorm';
 import { CreateSchoolPageDto } from './dtos/create.school-page.dto';
 import { PageAlreadyExistException } from '../../exceptions/page.already.exist.exception';
-import { NewSpeedEntity } from '../../entites/new-speed.entity';
+import { NewsFeedEntity } from '../../entites/news-feed.entity';
 import { CreateNewsFaileException } from '../../exceptions/create.news.faile.exception';
 import { SchoolPageNotFoundException } from '../../exceptions/school-page.not.found.exception';
 import { CreateSchoolPagePresenter } from './presenters/create.school-page.presenter';
@@ -14,8 +14,8 @@ export class SchoolPageService {
 	constructor(
 		@InjectRepository(SchoolPageEntity)
 		private readonly schoolPageRepository: Repository<SchoolPageEntity>,
-		@InjectRepository(NewSpeedEntity)
-		private readonly newSpeedRepository: Repository<NewSpeedEntity>,
+		@InjectRepository(NewsFeedEntity)
+		private readonly newSpeedRepository: Repository<NewsFeedEntity>,
 	) {}
 
 	async create(dto: CreateSchoolPageDto) {

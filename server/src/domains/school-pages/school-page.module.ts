@@ -3,11 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SchoolPageEntity } from '../../entites/school-page.entity';
 import { SchoolPageController } from './school-page.controller';
 import { SchoolPageService } from './school-page.service';
-import { NewSpeedEntity } from '../../entites/new-speed.entity';
+import { NewsFeedEntity } from '../../entites/news-feed.entity';
 
 @Module({
 	imports: [
-		TypeOrmModule.forFeature([SchoolPageEntity, NewSpeedEntity]),
+		TypeOrmModule.forFeature([SchoolPageEntity, NewsFeedEntity]),
 		// JwtModule.registerAsync({
 		// 	imports: [ConfigModule],
 		// 	inject: [ConfigService],
