@@ -39,17 +39,22 @@ export class SchoolPageController {
 		return await this.schoolPageService.createNews(params);
 	}
 
-	@Delete('/news-feed/:id')
+	@Delete('/:schoolPageId/news-feed/:newsFeedId')
 	@ApiOperation({ summary: '소식 삭제' })
-	async deleteNews(@Param('id') id: string) {
-		return await this.schoolPageService.deleteNews(id);
+	async deleteNews(@Param('schoolPageId') schoolPageId: string, @Param('newsFeedId') newsFeedId: string) {
+		const params = {
+			schoolPageId: Number(schoolPageId),
+			newsFeedId: Number(newsFeedId),
+		};
+		return await this.schoolPageService.deleteNews(params);
 	}
 
-	@Patch('/news-feed/:id')
+	@Patch('/:schoolPageId/news-feed/:newsFeedId')
 	@ApiOperation({ summary: '소식 수정' })
-	async updateNews(@Body() body: UpdateNewsFeedDto, @Param('id') id: string) {
+	async updateNews(@Body() body: UpdateNewsFeedDto, @Param('schoolPageId') schoolPageId: string, @Param('newsFeedId') newsFeedId: string) {
 		const params = {
-			id: Number(id),
+			schoolPageId: Number(schoolPageId),
+			newsFeedId: Number(newsFeedId),
 			news: body.news,
 		};
 		return await this.schoolPageService.updateNews(params);

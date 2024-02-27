@@ -20,8 +20,6 @@ export class StudentService {
 		private readonly accountRepository: Repository<AccountEntity>,
 		@InjectRepository(NewsFeedEntity)
 		private readonly newsFeedRepository: Repository<NewsFeedEntity>,
-		@InjectRepository(StudentNewsEntity)
-		private readonly studentNewsRepository: Repository<StudentNewsEntity>,
 	) {}
 
 	async subscribe(params: { schoolPageId: number; accountId: number }) {
@@ -130,8 +128,6 @@ export class StudentService {
 			.setParameters({ accountId: params.accountId })
 			.orderBy('nf.createdAt', 'DESC')
 			.getMany();
-
-		console.log(newsFeeds);
 
 		return {
 			data: newsFeeds.map(newsFeed => {

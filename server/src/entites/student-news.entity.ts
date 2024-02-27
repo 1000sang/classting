@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Column, Entity, Index, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { CommonEntity } from './common.entity';
 import { Exclude } from 'class-transformer';

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Module } from '@nestjs/common';
 import { AccountModule } from './domains/accounts/account.module';
 import { TypeOrmModule } from '@nestjs/typeorm';

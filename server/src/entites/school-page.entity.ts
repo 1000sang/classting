@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, Unique } from 'typeorm';
 import { CommonEntity } from './common.entity';
 import { NewsFeedEntity } from './news-feed.entity';
@@ -15,7 +16,7 @@ export class SchoolPageEntity extends CommonEntity {
 	schoolName: string;
 
 	@OneToMany(type => NewsFeedEntity, newSpeed => newSpeed.id)
-	newSpeed: NewsFeedEntity[];
+	newsFeed: NewsFeedEntity[];
 
 	@ManyToMany(() => AccountEntity)
 	@JoinTable({

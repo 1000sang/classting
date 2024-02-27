@@ -6,7 +6,6 @@ import { LoginDto } from './dtos/login.dto';
 import { InvalidatePasswordException } from '../../exceptions/invalidate.password.exception';
 import { JwtService } from '@nestjs/jwt';
 import { LoginPresenter } from './presenters/login.presenter';
-import { InternalException } from '../../exceptions/internal.exception';
 import { NotFoundAccountException } from '../../exceptions/not.found.account.exception';
 
 const defaultAccount = [
@@ -32,27 +31,23 @@ export class AccountService {
 	}
 
 	async insertDefaultAccount() {
-		try {
-			const result = await this.accountRepository.find({});
-			if (result.length < 1) {
-				await this.accountRepository.insert(defaultAccount);
-			}
-		} catch (err) {
-			throw new HttpException(err.response, 500);
+		const result = await this.accountRepository.find({});
+		if (result.length < 1) {
+			await this.accountRepository.insert(defaultAccount);
 		}
 	}
 
 	async login(dto: LoginDto) {
-		const account: AccountEntity = await this.accountRepository.findOne({
-			where: {
-				email: dto.email,
-				password: dto.password,
-			},
-		});
-
-		if (!account) {
-			throw new InvalidatePasswordException('로그인 정보가 틀렸습니다');
-		}
+		const account: AccountEntity = await this.accountRepository
+			.findOneOrFail({
+				where: {
+					email: dto.email,
+					password: dto.password,
+				},
+			})
+			.catch(() => {
+				throw new InvalidatePasswordException('로그인 정보가 틀렸습니다');
+			});
 
 		const token = await this.jwtService.signAsync({
 			id: account.id,
