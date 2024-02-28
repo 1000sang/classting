@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SchoolPageService } from './school-page.service';
 import { CreateSchoolPageDto } from './dtos/create.school-page.dto';
@@ -6,6 +6,7 @@ import { CreateSchoolPagePresenter } from './presenters/create.school-page.prese
 import { CreateNewsFeedDto } from './dtos/create.news-feed.dto';
 import { UpdateNewsFeedDto } from './dtos/update.news-feed.dto';
 import { CreateNewsFeedPresenter } from './presenters/create.news-feed.presenter';
+import { SchoolAdminGuard } from '../accounts/passport/guards/school-admin.guard';
 
 @ApiBearerAuth()
 @Controller('/school-page')
@@ -14,6 +15,7 @@ export class SchoolPageController {
 	constructor(private readonly schoolPageService: SchoolPageService) {}
 
 	@Post()
+	@UseGuards(SchoolAdminGuard)
 	@ApiOperation({ summary: '학교 페이지 생성' })
 	@ApiBody({ type: CreateSchoolPageDto })
 	@ApiCreatedResponse({
@@ -25,6 +27,7 @@ export class SchoolPageController {
 	}
 
 	@Post('/:id/news-feed/')
+	@UseGuards(SchoolAdminGuard)
 	@ApiOperation({ summary: '소식 작성' })
 	@ApiBody({ type: CreateNewsFeedDto })
 	@ApiCreatedResponse({
@@ -40,6 +43,7 @@ export class SchoolPageController {
 	}
 
 	@Delete('/:schoolPageId/news-feed/:newsFeedId')
+	@UseGuards(SchoolAdminGuard)
 	@ApiOperation({ summary: '소식 삭제' })
 	async deleteNews(@Param('schoolPageId') schoolPageId: string, @Param('newsFeedId') newsFeedId: string) {
 		const params = {
@@ -50,6 +54,7 @@ export class SchoolPageController {
 	}
 
 	@Patch('/:schoolPageId/news-feed/:newsFeedId')
+	@UseGuards(SchoolAdminGuard)
 	@ApiOperation({ summary: '소식 수정' })
 	async updateNews(@Body() body: UpdateNewsFeedDto, @Param('schoolPageId') schoolPageId: string, @Param('newsFeedId') newsFeedId: string) {
 		const params = {
