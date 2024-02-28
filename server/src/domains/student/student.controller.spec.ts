@@ -10,6 +10,7 @@ const mockStudentService = {
 	unsubscribe: jest.fn(),
 	getSchoolPage: jest.fn(),
 	getNewsFeed: jest.fn(),
+	getAllNewsFeed: jest.fn(),
 };
 
 const account: AccountEntity = {
@@ -57,7 +58,7 @@ describe('StudentController', () => {
 	describe('unsubscribe', () => {
 		it('unsubscribe controller', async () => {
 			jest.spyOn(studentService, 'unsubscribe').mockImplementation(() => undefined);
-			expect(await studentController.subscribe('1', account)).toBe(undefined);
+			expect(await studentController.unsubscribe('1', account)).toBe(undefined);
 		});
 	});
 
@@ -72,6 +73,13 @@ describe('StudentController', () => {
 		it('getSchoolPage controller', async () => {
 			jest.spyOn(studentService, 'getNewsFeed').mockImplementation(() => undefined);
 			expect(await studentController.getNewsFeed('1', account)).toBe(undefined);
+		});
+	});
+
+	describe('getAllNewsFeed', () => {
+		it('getAllNewsFeed controller', async () => {
+			jest.spyOn(studentService, 'getAllNewsFeed').mockImplementation(() => undefined);
+			expect(await studentController.getAllNewsFeed(account)).toBe(undefined);
 		});
 	});
 });

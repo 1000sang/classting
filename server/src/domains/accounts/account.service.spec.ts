@@ -13,6 +13,7 @@ const MockAccountRepository = () => ({
 	insert: jest.fn(),
 	findOneOrFail: jest.fn(),
 	findOneByOrFail: jest.fn(),
+	find: jest.fn(),
 });
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
@@ -64,6 +65,35 @@ describe('SchoolPageService', () => {
 				await accountService.findOneById(1);
 			};
 			await expect(result).rejects.toThrow(new NotFoundAccountException('계정을 찾을 수 없습니다.'));
+		});
+	});
+
+	describe('insertDefaultAccount', () => {
+		const accounts = [
+			{
+				id: 1,
+				email: 'email@email.com',
+				password: '1234',
+				createdAt: new Date(),
+				updatedAt: new Date(),
+				isStudent: true,
+				schoolPages: [],
+			},
+		];
+
+		it('기본 계정이 이미 있을때 그냥 스킵', async () => {
+			jest.spyOn(accountRepository, 'find').mockResolvedValue(accounts);
+			const result = await accountService.insertDefaultAccount();
+			expect(result).toEqual(undefined);
+		});
+
+		it('기본 계정이 없으면 insert 실행', async () => {
+			const accounts = [];
+
+			jest.spyOn(accountRepository, 'find').mockResolvedValue(accounts);
+			jest.spyOn(accountRepository, 'insert').mockResolvedValue(null);
+			const result = await accountService.insertDefaultAccount();
+			expect(result).toEqual(undefined);
 		});
 	});
 

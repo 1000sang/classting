@@ -89,7 +89,7 @@ describe('StudentController', () => {
 				news: 'news',
 			};
 			jest.spyOn(schoolPageService, 'updateNews').mockResolvedValue(undefined);
-			expect(await schoolPageController.updateNews(body, '2')).toBe(undefined);
+			expect(await schoolPageController.updateNews(body, '2', '3')).toBe(undefined);
 		});
 	});
 });
