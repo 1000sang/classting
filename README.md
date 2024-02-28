@@ -26,3 +26,10 @@ $ brew install cask docker-compose
 $ docker compose up
 ```
 
+## Test
+```angular2html
+$ cd server
+
+# test coverage
+$ npm run test:cov
+```
