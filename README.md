@@ -20,6 +20,19 @@ $ brew install cask docker-compose
 
 ```
 
+## Environment
+```angular2html
+# .env file
+
+ENV=dev
+DB_USER=admin
+DB_PASSWORD=admin1234
+DB_PORT=5432
+DB_HOST=postgres
+DB_NAME=classting
+SECRET_KEY=secretKey
+```
+
 ## Running the app
 
 ```
